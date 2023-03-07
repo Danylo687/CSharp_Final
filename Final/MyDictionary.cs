@@ -48,13 +48,21 @@ namespace Dictionary
 
         }
 
-        public int myFind(string name)
+        public int myFindIndex(string name)
         {
             for (int i = 0; i < Words.Count(); i++)
             {
                 if (Words[i].Name == name) return i;
             }
             return -1;
+        }
+        public Word myFind(string name)
+        {
+            for (int i = 0; i < Words.Count(); i++)
+            {
+                if (Words[i].Name == name) return Words[i];
+            }
+            return null;
         }
 
         public override string ToString()

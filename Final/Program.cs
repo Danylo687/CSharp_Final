@@ -20,9 +20,9 @@ namespace Final
 
             // Створення словника
             List<Word> wordsEnToUa = new List<Word> {
-                new Word("Apple", new List<string>{ "Яблуко", "Ябко", "Яблучко" } ),
-                new Word("Tomato", new List<string>{ "Помідор", "Томати", "Помадори" } ),
-                new Word("Egg", new List<string>{ "Яйце", "Яйко", "Яєчко" } )
+                new Word("Apple", new List<string>{ "Яблуко", "Ябко", "1" } ),
+                new Word("Tomato", new List<string>{ "Помідор", "Томати", "1" } ),
+                new Word("Egg", new List<string>{ "Яйце", "Яйко", "1" } )
             };
             MyDictionary dictionaryEnToUa = new MyDictionary("En-Ua", wordsEnToUa);
             List<Word> wordsUaToEn = new List<Word> {
@@ -66,10 +66,10 @@ namespace Final
                         myDictionarys.AddTranslation();
                         break;
                     case 3:
-
+                        myDictionarys.ChangeWord();
                         break;
                     case 4:
-
+                        myDictionarys.ChangeTranslation();
                         break;
                 }
 

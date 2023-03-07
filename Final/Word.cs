@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dictionary
 {
@@ -24,6 +25,14 @@ namespace Dictionary
             Interpretations = interpretations;
         }
 
+        public int myFindIndex(string searchTranslation)
+        {
+            for (int i = 0; i < Interpretations.Count(); i++)
+            {
+                if (Interpretations[i] == searchTranslation) return i;
+            }
+            return -1;
+        }
 
         public override string ToString()
         {

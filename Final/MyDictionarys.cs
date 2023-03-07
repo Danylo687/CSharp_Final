@@ -57,8 +57,8 @@ namespace Final
                     addedWord.Interpretations.Add(Console.ReadLine());
                 }
 
-                Console.WriteLine("\n\n" + addedWord);
-                Console.ReadKey();
+                //Console.WriteLine("\n\n" + addedWord);
+                //Console.ReadKey();
                 Console.Clear();
             }
         }
@@ -78,7 +78,7 @@ namespace Final
             Console.Write("Enter choice: ");
             int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
 
-            // ----------------------------------------------
+            // ------------------------------------
             bool added = false, isCorrect = true;
             do
             {
@@ -104,7 +104,134 @@ namespace Final
 
         }
 
-        // ------------------------------------------
+        // ---------------------------------------------------------------------------------------------------------------------------
+        public void ChangeWord()
+        {
+            Console.Clear();
+            Console.WriteLine("Choose dictionary");
+            Console.WriteLine(new string('-', 20));
+            for (int i = 0; i < Dictionarys.Count; i++)
+            {
+                int j = i + 1;
+                Console.WriteLine($"{j} - {Dictionarys[i].Name}");
+            }
+            Console.WriteLine("0 - Back");
+            Console.WriteLine(new string('-', 30));
+
+            Console.Write("Enter choice: ");
+            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            Console.Clear();
+
+            // -----------------------------------
+            bool added = false, isCorrect = true;
+            while (!added && selectedDictionary != -1)
+            {
+                if (!isCorrect) Console.WriteLine("Incorrect word!!!");
+                if (selectedDictionary != -1)
+                {
+                    Console.Write("Enter word: ");
+                    string searchWord = Console.ReadLine();
+
+                    if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
+                    {
+                        Word newWord = new Word();
+
+                        Console.Write("Enter word: ");
+                        newWord.Name = Console.ReadLine();
+                        List<string> translations = new List<string>();
+                        Console.Write("Enter the number of word translations: ");
+                        int countOfTranslations = Convert.ToInt32(Console.ReadLine());
+                        for (int i = 0; i < countOfTranslations; i++)
+                        {
+                            int j = i + 1;
+                            Console.Write($"Enter {j} translation: ");
+                            newWord.Interpretations.Add(Console.ReadLine());
+                        }
+
+                        Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)] = newWord;
+
+                        isCorrect = true;
+                        added = true;
+                    }
+                    else isCorrect = false;
+
+                    Console.Clear();
+                }
+            }
+
+        }
+        public void ChangeTranslation()
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+
+            Console.Clear();
+            Console.WriteLine("Choose dictionary");
+            Console.WriteLine(new string('-', 20));
+            for (int i = 0; i < Dictionarys.Count; i++)
+            {
+                int j = i + 1;
+                Console.WriteLine($"{j} - {Dictionarys[i].Name}");
+            }
+            Console.WriteLine("0 - Back");
+            Console.WriteLine(new string('-', 30));
+
+            Console.Write("Enter choice: ");
+            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+
+            // ------------------------------------
+            bool added = false, isCorrect = true;
+            do
+            {
+                Console.Clear();
+                if (!isCorrect) Console.WriteLine("Incorrect word!!!");
+                if (selectedDictionary != -1)
+                {
+                    Console.Write("Enter word: ");
+                    string searchWord = Console.ReadLine();
+
+                    if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
+                    {
+                        // =======
+                        do {
+                            Console.Clear();
+                            if (!isCorrect) Console.WriteLine("Incorrect translation!!!");
+
+                            Console.Write("Enter translation: ");
+                            string searchTranslation = Console.ReadLine();
+
+                            if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).Interpretations.Find(x => x == searchTranslation) != null)
+                            {
+                                Console.Write("Enter translation: ");
+
+                                Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].Interpretations[
+                                    Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].myFindIndex(searchTranslation)] = Console.ReadLine();
+
+
+                                isCorrect = true;
+                                added = true;
+                            }
+                            else isCorrect = false;
+                        } while(!isCorrect);
+
+                        Console.Clear();
+
+
+                        // -------------
+                        //Console.Write("Enter translation: ");
+                        //Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).Interpretations.Add(Console.ReadLine());
+                        //isCorrect = true;
+                        //added = true;
+                    }
+                    else isCorrect = false;
+
+                    Console.Clear();
+                }
+            } while (!added);
+
+        }
+
+
+        // --------------------------------------------------------------------------------------------------------------------------
         public override string ToString()
         {
             string str = "";
