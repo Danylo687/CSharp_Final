@@ -22,7 +22,8 @@ namespace Final
             List<Word> wordsEnToUa = new List<Word> {
                 new Word("Apple", new List<string>{ "Яблуко", "Ябко", "1" } ),
                 new Word("Tomato", new List<string>{ "Помідор", "Томати", "1" } ),
-                new Word("Egg", new List<string>{ "Яйце", "Яйко", "1" } )
+                new Word("Egg", new List<string>{ "Яйце", "Яйко", "1" } ),
+                new Word("1", new List<string>{ "1", "1", "1" } )
             };
             MyDictionary dictionaryEnToUa = new MyDictionary("En-Ua", wordsEnToUa);
             List<Word> wordsUaToEn = new List<Word> {
@@ -71,6 +72,25 @@ namespace Final
                     case 4:
                         myDictionarys.ChangeTranslation();
                         break;
+                    case 5:
+                        myDictionarys.DeleteWord();
+                        break;
+                    case 6:
+                        myDictionarys.DeleteTranslation();
+                        break;
+                    case 7:
+                        myDictionarys.FindTranslation();
+                        break;
+                    case 8:
+                        myDictionarys.SortDictionary();
+                        break;
+                    case 9:
+
+                        break;
+                    case 10:
+
+                        break;
+
                 }
 
 
