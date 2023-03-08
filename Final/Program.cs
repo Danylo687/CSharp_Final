@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using NLog;
 //using ClassLib;
 
 namespace Final
@@ -17,6 +18,8 @@ namespace Final
         {
             // Для кирилиці
             Console.OutputEncoding = Encoding.UTF8;
+            // NLog
+            Logger logger = LogManager.GetCurrentClassLogger();
 
             // Створення словника
             List<Word> wordsEnToUa = new List<Word> {
@@ -41,6 +44,7 @@ namespace Final
             int choice;
             do
             {
+                Console.Clear();
                 Console.WriteLine(new string('-', 27));
                 Console.WriteLine("1  - Add word");
                 Console.WriteLine("2  - Add translation");

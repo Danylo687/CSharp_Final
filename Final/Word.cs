@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using NLog;
 
 namespace Dictionary
 {
@@ -11,6 +12,8 @@ namespace Dictionary
     {
         public string Name { get; set; }
         public List<string> Interpretations { get; set; } = new List<string>();
+        // NLog
+        Logger logger = LogManager.GetCurrentClassLogger();
 
         public Word() 
         {

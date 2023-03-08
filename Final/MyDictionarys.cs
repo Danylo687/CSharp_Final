@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
 namespace Final
 {
@@ -12,6 +13,7 @@ namespace Final
     public class MyDictionarys
     {
         public List<MyDictionary> Dictionarys { get; set; } = new List<MyDictionary>();
+        Logger logger = LogManager.GetCurrentClassLogger();
 
         public MyDictionarys() { Dictionarys = new List<MyDictionary>(); }
         public MyDictionarys(List<MyDictionary> dictionarys)
@@ -398,13 +400,15 @@ namespace Final
             Console.Clear();
             // -----------------------------------
 
-            while (selectedDictionary != -1)
+            if (selectedDictionary != -1)
             {
-                Console.WriteLine(Dictionarys[selectedDictionary]);
+                //Console.WriteLine(Dictionarys[selectedDictionary]);
                 Dictionarys[selectedDictionary].Words.Sort((x, y) => x.Name.CompareTo(y.Name));
-                Console.WriteLine(new string('-', 50));
+                //Console.WriteLine(new string('-', 50));
+                logger.Info("Sort");
                 Console.WriteLine(Dictionarys[selectedDictionary]);
                 Console.ReadKey();
+                Console.Clear();
             }
 
         }

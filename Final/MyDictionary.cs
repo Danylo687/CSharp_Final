@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using NLog;
 
 namespace Dictionary
 {
@@ -13,6 +14,8 @@ namespace Dictionary
     {
         public string Name { get; set; }
         public List<Word> Words { get; set; }
+        // NLog
+        Logger logger = LogManager.GetCurrentClassLogger();
 
         public MyDictionary()
         {
