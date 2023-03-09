@@ -13,7 +13,7 @@ using NLog;
 namespace Final
 {
     internal class Program
-    {       
+    {
         static void Main(string[] args)
         {
             // Для кирилиці
@@ -29,6 +29,8 @@ namespace Final
                 new Word("1", new List<string>{ "1", "1", "1" } )
             };
             MyDictionary dictionaryEnToUa = new MyDictionary("En-Ua", wordsEnToUa);
+            dictionaryEnToUa.SaveDataToXml();
+
             List<Word> wordsUaToEn = new List<Word> {
                 new Word("Імя", new List<string>{ "Name", "Title", "Appellation" } ),
                 new Word("Квітка", new List<string>{ "Flower", "Blossom", "Bloom" } ),
@@ -46,6 +48,7 @@ namespace Final
             {
                 Console.Clear();
                 Console.WriteLine(new string('-', 27));
+                Console.WriteLine("0  - Exit");
                 Console.WriteLine("1  - Add word");
                 Console.WriteLine("2  - Add translation");
                 Console.WriteLine("3  - Change word");
@@ -89,23 +92,26 @@ namespace Final
                         myDictionarys.SortDictionary();
                         break;
                     case 9:
-
+                        myDictionarys.ViewHistory();
                         break;
                     case 10:
-
+                        myDictionarys.DeleteHistory();
+                        break;
+                    case 11:
+                        myDictionarys.ViewLastRequests();
                         break;
 
                 }
 
 
-            } while (true);
+            } while (choice != 0);
 
 
 
-        
-        
-        
-        
+
+
+
+
         }
     }
 }

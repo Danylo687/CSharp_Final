@@ -13,6 +13,7 @@ namespace Final
     public class MyDictionarys
     {
         public List<MyDictionary> Dictionarys { get; set; } = new List<MyDictionary>();
+        public List<string> History { get; set; } = new List<string>();
         Logger logger = LogManager.GetCurrentClassLogger();
 
         public MyDictionarys() { Dictionarys = new List<MyDictionary>(); }
@@ -60,7 +61,8 @@ namespace Final
                 }
 
                 Dictionarys[selectedDictionary].Words.Add(addedWord);
-
+                logger.Info("Add word");
+                History.Add($"Add word: {addedWord}");
 
                 Console.Clear();
             }
@@ -95,7 +97,10 @@ namespace Final
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
                         Console.Write("Enter translation: ");
-                        Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).Interpretations.Add(Console.ReadLine());
+                        string addedTranslation = Console.ReadLine();
+                        Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).Interpretations.Add(addedTranslation);
+                        logger.Info("Add translation");
+                        History.Add($"Add translation: {addedTranslation}");
                         isCorrect = true;
                         added = true;
                     }
@@ -152,6 +157,8 @@ namespace Final
                         }
 
                         Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)] = newWord;
+                        logger.Info("Change word");
+                        History.Add($"Change word: {newWord}");
 
                         isCorrect = true;
                         added = true;
@@ -195,7 +202,8 @@ namespace Final
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
                         // =======
-                        do {
+                        do
+                        {
                             Console.Clear();
                             if (!isCorrect) Console.WriteLine("Incorrect translation!!!");
 
@@ -206,15 +214,16 @@ namespace Final
                             {
                                 Console.Write("Enter translation: ");
 
-                                Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].Interpretations[
-                                    Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].myFindIndex(searchTranslation)] = Console.ReadLine();
-
+                                string newTranslation = Console.ReadLine();
+                                Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].Interpretations[Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].myFindIndex(searchTranslation)] = newTranslation;
+                                logger.Info("Change translation");
+                                History.Add($"Change translation: {newTranslation}");
 
                                 isCorrect = true;
                                 added = true;
                             }
                             else isCorrect = false;
-                        } while(!isCorrect);
+                        } while (!isCorrect);
 
                         Console.Clear();
                     }
@@ -225,7 +234,7 @@ namespace Final
             } while (!added);
 
         }
-        
+
         // ---------------------------------------------------------------------------------------------------------------------------
         public void DeleteWord()
         {
@@ -257,6 +266,8 @@ namespace Final
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
                         Dictionarys[selectedDictionary].Words.Remove(Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)));
+                        logger.Info("Delete word");
+                        History.Add($"Delete word: {Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).ToString()}");
 
                         isCorrect = true;
                         added = true;
@@ -313,10 +324,13 @@ namespace Final
                                 if (Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].Interpretations.Count > 1)
                                 {
                                     Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].Interpretations.Remove(searchTranslation);
+                                    logger.Info("Delete translation");
+                                    History.Add($"Delete translation: {Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].Interpretations.Find(x => (x == searchTranslation))}");
                                 }
                                 else
                                 {
                                     Console.WriteLine("This word has only one translation, you cannot delete this translation");
+                                    logger.Info("Try delete translation");
                                     Console.ReadKey();
                                 }
 
@@ -369,6 +383,8 @@ namespace Final
                     {
                         Console.WriteLine();
                         Console.WriteLine(Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)]);
+                        logger.Info("Search translation");
+                        History.Add($"Search translation: {Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)]}");
                         Console.ReadKey();
 
                         isCorrect = true;
@@ -380,7 +396,7 @@ namespace Final
                 }
             }
         }
-        
+
         // ---------------------------------------------------------------------------------------------------------------------------
         public void SortDictionary()
         {
@@ -406,11 +422,46 @@ namespace Final
                 Dictionarys[selectedDictionary].Words.Sort((x, y) => x.Name.CompareTo(y.Name));
                 //Console.WriteLine(new string('-', 50));
                 logger.Info("Sort");
+                History.Add("Sort");
                 Console.WriteLine(Dictionarys[selectedDictionary]);
                 Console.ReadKey();
                 Console.Clear();
             }
 
+        }
+
+        // ---------------------------------------------------------------------------------------------------------------------------
+        public void ViewHistory()
+        {
+            Console.Clear();
+            Console.WriteLine("History: \n");
+            foreach (var item in History)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadKey();
+        }
+        public void DeleteHistory()
+        {
+            Console.Clear();
+            History.Clear();
+        }
+        public void ViewLastRequests()
+        {
+            Console.Clear();
+            int c;
+            if (History.Count < 5) c = History.Count;
+            else c = 5;
+            if (c > 0)
+            {
+                Console.WriteLine("History: \n");
+                for (int i = 0; i < c; i++)
+                {
+                    Console.WriteLine(History[History.Count - i - 1]);
+                }
+            }
+            else Console.WriteLine("History is clear");
+            Console.ReadKey();
         }
 
 

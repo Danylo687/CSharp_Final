@@ -15,7 +15,7 @@ namespace Dictionary
         // NLog
         Logger logger = LogManager.GetCurrentClassLogger();
 
-        public Word() 
+        public Word()
         {
             Name = "Not set";
             Interpretations = new List<string>();
