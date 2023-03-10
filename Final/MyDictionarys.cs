@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NLog;
+using System.Text.RegularExpressions;
 
 namespace Final
 {
@@ -26,6 +27,40 @@ namespace Final
             Dictionarys.Add(dictionary);
         }
         // ------------------------------------------
+        public static string ReadWord()
+        {
+            string str = Console.ReadLine();
+
+            string pattern = @"^[a-zA-Z'_\-]+$";
+            do
+            {
+                if (Regex.IsMatch(str, pattern))
+                    return str;
+                else
+                {
+                    Console.Write("Incorrect word!!! \nEnter word again: ");
+                    str = ReadWord();
+                }
+            } while (true);
+        }
+        public static string ReadNumber()
+        {
+            string str = Console.ReadLine();
+
+            string pattern = @"^\d+$";
+            do
+            {
+                if (Regex.IsMatch(str, pattern))
+                    return str;
+                else
+                {
+                    Console.Write("Incorrect number!!! \nEnter number again: ");
+                    str = Console.ReadLine();
+                }
+            } while (true);
+        }
+
+        // ------------------------------------------
 
         public void AddWord()
         {
@@ -41,7 +76,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
 
             // ----------------------------------------------
             Console.Clear();
@@ -49,15 +89,15 @@ namespace Final
             {
                 Word addedWord = new Word();
                 Console.Write("Enter word: ");
-                addedWord.Name = Console.ReadLine();
+                addedWord.Name = ReadWord();
                 List<string> translations = new List<string>();
                 Console.Write("Enter the number of word translations: ");
-                int countOfTranslations = Convert.ToInt32(Console.ReadLine());
+                int countOfTranslations = Convert.ToInt32(ReadNumber());
                 for (int i = 0; i < countOfTranslations; i++)
                 {
                     int j = i + 1;
                     Console.Write($"Enter {j} translation: ");
-                    addedWord.Interpretations.Add(Console.ReadLine());
+                    addedWord.Interpretations.Add(ReadWord());
                 }
 
                 Dictionarys[selectedDictionary].Words.Add(addedWord);
@@ -81,7 +121,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
 
             // ------------------------------------
             bool added = false, isCorrect = true;
@@ -92,12 +137,12 @@ namespace Final
                 if (selectedDictionary != -1)
                 {
                     Console.Write("Enter word: ");
-                    string searchWord = Console.ReadLine();
+                    string searchWord = ReadWord();
 
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
                         Console.Write("Enter translation: ");
-                        string addedTranslation = Console.ReadLine();
+                        string addedTranslation = ReadWord();
                         Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).Interpretations.Add(addedTranslation);
                         logger.Info("Add translation");
                         History.Add($"Add translation: {addedTranslation}");
@@ -127,7 +172,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
             Console.Clear();
 
             // -----------------------------------
@@ -138,22 +188,22 @@ namespace Final
                 if (selectedDictionary != -1)
                 {
                     Console.Write("Enter word: ");
-                    string searchWord = Console.ReadLine();
+                    string searchWord = ReadWord();
 
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
                         Word newWord = new Word();
 
                         Console.Write("Enter word: ");
-                        newWord.Name = Console.ReadLine();
+                        newWord.Name = ReadWord();
                         List<string> translations = new List<string>();
                         Console.Write("Enter the number of word translations: ");
-                        int countOfTranslations = Convert.ToInt32(Console.ReadLine());
+                        int countOfTranslations = Convert.ToInt32(ReadNumber());
                         for (int i = 0; i < countOfTranslations; i++)
                         {
                             int j = i + 1;
                             Console.Write($"Enter {j} translation: ");
-                            newWord.Interpretations.Add(Console.ReadLine());
+                            newWord.Interpretations.Add(ReadWord());
                         }
 
                         Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)] = newWord;
@@ -186,7 +236,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
 
             // ------------------------------------
             bool added = false, isCorrect = true;
@@ -197,7 +252,7 @@ namespace Final
                 if (selectedDictionary != -1)
                 {
                     Console.Write("Enter word: ");
-                    string searchWord = Console.ReadLine();
+                    string searchWord = ReadWord();
 
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
@@ -208,13 +263,13 @@ namespace Final
                             if (!isCorrect) Console.WriteLine("Incorrect translation!!!");
 
                             Console.Write("Enter translation: ");
-                            string searchTranslation = Console.ReadLine();
+                            string searchTranslation = ReadWord();
 
                             if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).Interpretations.Find(x => x == searchTranslation) != null)
                             {
                                 Console.Write("Enter translation: ");
 
-                                string newTranslation = Console.ReadLine();
+                                string newTranslation = ReadWord();
                                 Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].Interpretations[Dictionarys[selectedDictionary].Words[Dictionarys[selectedDictionary].myFindIndex(searchWord)].myFindIndex(searchTranslation)] = newTranslation;
                                 logger.Info("Change translation");
                                 History.Add($"Change translation: {newTranslation}");
@@ -250,7 +305,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
             Console.Clear();
             // -----------------------------------
 
@@ -261,7 +321,7 @@ namespace Final
                 if (selectedDictionary != -1)
                 {
                     Console.Write("Enter word: ");
-                    string searchWord = Console.ReadLine();
+                    string searchWord = ReadWord();
 
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
@@ -293,7 +353,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
             Console.Clear();
             // -----------------------------------
 
@@ -305,7 +370,7 @@ namespace Final
                 if (selectedDictionary != -1)
                 {
                     Console.Write("Enter word: ");
-                    string searchWord = Console.ReadLine();
+                    string searchWord = ReadWord();
 
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
@@ -317,7 +382,7 @@ namespace Final
                             if (!isCorrect) Console.WriteLine("Incorrect translation!!!");
 
                             Console.Write("Enter translation: ");
-                            string searchTranslation = Console.ReadLine();
+                            string searchTranslation = ReadWord();
 
                             if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)).Interpretations.Find(x => x == searchTranslation) != null)
                             {
@@ -366,7 +431,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
             Console.Clear();
             // -----------------------------------
 
@@ -377,7 +447,7 @@ namespace Final
                 if (selectedDictionary != -1)
                 {
                     Console.Write("Enter word: ");
-                    string searchWord = Console.ReadLine();
+                    string searchWord = ReadWord();
 
                     if (Dictionarys[selectedDictionary].Words.Find(x => (x.Name == searchWord)) != null)
                     {
@@ -412,7 +482,12 @@ namespace Final
             Console.WriteLine(new string('-', 30));
 
             Console.Write("Enter choice: ");
-            int selectedDictionary = Convert.ToInt32(Console.ReadLine()) - 1;
+            int selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            while (selectedDictionary > Dictionarys.Count)
+            {
+                Console.Write("Incorrect number of dictionary!!!\nEnter number of dictionary again: ");
+                selectedDictionary = Convert.ToInt32(ReadNumber()) - 1;
+            }
             Console.Clear();
             // -----------------------------------
 

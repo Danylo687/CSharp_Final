@@ -8,12 +8,65 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using NLog;
-//using ClassLib;
+using System.Text.RegularExpressions;
+using Dictionary;
 
 namespace Final
 {
     internal class Program
     {
+        public static string ReadWord()
+        {
+            string str = Console.ReadLine();
+
+            string pattern = @"^[a-zA-Z'_\-]+$";
+            do
+            {
+                if (Regex.IsMatch(str, pattern))
+                    return str;
+                else {
+                    Console.Write("Incorrect word!!! \nEnter word again: ");
+                    str = Console.ReadLine(); 
+                }
+            } while (true);
+        }
+        public static string ReadNumber()
+        {
+            string str = Console.ReadLine();
+
+            string pattern = @"^\d+$";
+            do
+            {
+                if (Regex.IsMatch(str, pattern))
+                    return str;
+                else
+                {
+                    Console.Write("Incorrect number!!! \nEnter number again: ");
+                    str = Console.ReadLine();
+                }
+            } while (true);
+        }
+        public static int Menu()
+        {
+            Console.Clear();
+            Console.WriteLine(new string('-', 27));
+            Console.WriteLine("0  - Exit");
+            Console.WriteLine("1  - Add word");
+            Console.WriteLine("2  - Add translation");
+            Console.WriteLine("3  - Change word");
+            Console.WriteLine("4  - Change translation");
+            Console.WriteLine("5  - Delete word");
+            Console.WriteLine("6  - Delete translation");
+            Console.WriteLine("7  - Find word");
+            Console.WriteLine("8  - Sort");
+            Console.WriteLine("9  - View request history");
+            Console.WriteLine("10 - Delete request history");
+            Console.WriteLine("11 - View last requests");
+            Console.WriteLine(new string('-', 27));
+            Console.Write("Enter choice: ");
+
+            return Convert.ToInt32(ReadNumber());
+        }
         static void Main(string[] args)
         {
             // Для кирилиці
@@ -34,7 +87,8 @@ namespace Final
             List<Word> wordsUaToEn = new List<Word> {
                 new Word("Імя", new List<string>{ "Name", "Title", "Appellation" } ),
                 new Word("Квітка", new List<string>{ "Flower", "Blossom", "Bloom" } ),
-                new Word("Вартість", new List<string>{ "Cost", "Value", "Price" } )
+                new Word("Вартість", new List<string>{ "Cost", "Value", "Price" } ),
+                new Word("2", new List<string>{ "2", "2", "2" } )
             };
             MyDictionary dictionaryUaToEn = new MyDictionary("Ua-En", wordsUaToEn);
 
@@ -46,25 +100,8 @@ namespace Final
             int choice;
             do
             {
-                Console.Clear();
-                Console.WriteLine(new string('-', 27));
-                Console.WriteLine("0  - Exit");
-                Console.WriteLine("1  - Add word");
-                Console.WriteLine("2  - Add translation");
-                Console.WriteLine("3  - Change word");
-                Console.WriteLine("4  - Change translation");
-                Console.WriteLine("5  - Delete word");
-                Console.WriteLine("6  - Delete translation");
-                Console.WriteLine("7  - Find word");
-                Console.WriteLine("8  - Sort");
-                Console.WriteLine("9  - View request history");
-                Console.WriteLine("10 - Delete request history");
-                Console.WriteLine("11 - View last requests");
-                Console.WriteLine(new string('-', 27));
-                Console.Write("Enter choice: ");
-                choice = Convert.ToInt32(Console.ReadLine());
+                choice = Menu();
 
-                // ----------------------------------------------
                 switch (choice)
                 {
                     case 1:
